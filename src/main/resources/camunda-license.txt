@@ -1,0 +1,18 @@
+--------------- BEGIN CAMUNDA LICENSE KEY --------------- koVe7xSKTRj/xRcg1EDuSuWN/HqPJ3F3Bbm49y/3RKn1Wq302ySbddTZN
+MZqkcYdO6i2aOO6kX6H+rY0KcVaHNIMM7wv+8vxiG8iNnxQo4Nl8K84O3
+uXHiQrvw9+PklNzbCL82NJyf369RAsOBVUbayRaq4i5L/8IXuTW7D1zkB
+72DSd30sasVv2F7Epi37uMlaE1+TXIS0Phzhu+3yV00fztCrl9gpBwslc
+oKbdD+/apJ3vfU7gEPaVbwGm1BYUzJRcbTmEaLAYoiMWdgRvDKIqi8tJV
+Jt+WiXzcsCyYbv59UDdAJP+kwCFvQGyx6UriYm1LFS/i6oEHum83rjRHL
+Y7vl+ZmA/8LgSbI9trwUynrIr5GHaETsYQeAIueaCpzughDzdcymCtATi
+SK3HDFRsHyAken2qwkeXe6OoH6p0oZLIqZ7LlOTX4OJ7IO2mkFJqyla3F
+byOCmLJ2LwUFzY8a/ebo8hoeprF8WcnHuvFGUn5unBntfkvDYYQ6yY87R
+nVOHbk8/j5pUX3EBn5u8jx6sjzAxKr1U0KJWxwRl+tr6qcrIaiwFMhs/P
+NsG74tiUyHQJ77nVdpgcvPtkGT3QszlWDQFdSTr3vFnK8sIBsRXiDv07+
++YEFQ3lBUk+j8+2fOUApNMWDnMkEctMy2yLphrD6cTne765bt5BMAtSg=;
+customer = prjsc_upc;
+expiryDate = 2020-07-16;
+cawemo = true;
+optimize = true;
+camundaBPM = true;
+---------------  END CAMUNDA LICENSE KEY  ---------------

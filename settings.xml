@@ -5,7 +5,7 @@
   <pluginGroups>
   </pluginGroups>
 
-  <proxies>
+  <!--<proxies>
     <proxy>
       <id>optional</id>
       <active>true</active>
@@ -16,13 +16,13 @@
       <port>80</port>
       <nonProxyHosts>local.net|some.host.com</nonProxyHosts>
     </proxy>
-  </proxies>
+  </proxies>-->
 
   <servers>
     <server>
       <id>camunda-bpm-nexus-ee</id>
-      <username>camunda enterprise user</username>
-      <password>camunda enterprise password</password>
+      <username>trial_v_b_mankivskiy_gmail_com</username>
+      <password>9717700f-50cc-4e0c-9</password>
     </server>
   </servers>
 
