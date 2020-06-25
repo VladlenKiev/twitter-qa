@@ -149,4 +149,60 @@ public class ProcessJUnitTest {
 
     }
 
+    @Test
+    @Deployment(resources = "twitter-project-mankovskyi.bpmn")
+    public void happyPath_withMessaging() {
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("content", "Exercise 4 test - MANKOVSKYI");
+        variables.put("approved", true);
+
+        ProcessInstance processInstance = runtimeService()
+                .createMessageCorrelation("superUserTweet")
+                .setVariable("content", "My Exercise 11 Tweet (Mankovskyi) - " + System.currentTimeMillis())
+                .correlateWithResult()
+                .getProcessInstance();
+
+        assertThat(processInstance).isStarted();
+
+/*        runtimeService()
+                .createMessageCorrelation("tweetWithdrawn")
+                .processInstanceId(processInstance.getId())
+                .correlateWithResult();
+        */
+
+        // get the job
+        List<Job> jobList = jobQuery()
+                .processInstanceId(processInstance.getId())
+                .list();
+
+        // execute the job
+        Assertions.assertThat(jobList).hasSize(1);
+        Job job = jobList.get(0);
+        execute(job);
+
+        // Make assertions on the process instance
+        assertThat(processInstance).isEnded();
+    }
+
+    @Test
+    @Deployment(resources = "twitter-project-mankovskyi.bpmn")
+    public void testTweetWithdrawn_withMessaging() {
+
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("content", "Test tweetWithdrawn message - MANKOVSKYI");
+        variables.put("approved", true);
+
+        ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
+        assertThat(processInstance).isStarted().isWaitingAt("ReviewTweetTask");
+
+        runtimeService()
+                .createMessageCorrelation("tweetWithdrawn")
+                .processInstanceVariableEquals("content", "Test tweetWithdrawn message - MANKOVSKYI")
+                .correlateWithResult();
+
+        // Make assertions on the process instance
+        assertThat(processInstance).isEnded();
+    }
+
 }
