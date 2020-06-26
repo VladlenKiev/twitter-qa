@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_024sqbg" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.0.0">
+  <bpmn:process id="Process_1mxrxk9" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_16tmaby</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_16tmaby" sourceRef="StartEvent_1" targetRef="Activity_0d630r8" />
+    <bpmn:callActivity id="Activity_0d630r8" calledElement="here_put_your_code" camunda:calledElementBinding="deployment" camunda:variableMappingDelegateExpression="${mapping}">
+      <bpmn:extensionElements>
+        <camunda:in businessKey="#{execution.processBusinessKey}" />
+        <camunda:in variables="all" />
+        <camunda:out variables="all" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_16tmaby</bpmn:incoming>
+    </bpmn:callActivity>
+    <bpmn:textAnnotation id="TextAnnotation_1y22cqn">
+      <bpmn:text>If I update the child the older parent will call a new child!</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_04aagic">
+      <bpmn:text>When binding is "latest" all versions of the parent will always call latest version of the child</bpmn:text>
+    </bpmn:textAnnotation>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1mxrxk9">
+      <bpmndi:BPMNShape id="TextAnnotation_1y22cqn_di" bpmnElement="TextAnnotation_1y22cqn">
+        <dc:Bounds x="310" y="80" width="100" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_04aagic_di" bpmnElement="TextAnnotation_04aagic">
+        <dc:Bounds x="300" y="350" width="100" height="113" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_16tmaby_di" bpmnElement="Flow_16tmaby">
+        <di:waypoint x="215" y="237" />
+        <di:waypoint x="300" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="219" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02xrl8y_di" bpmnElement="Activity_0d630r8">
+        <dc:Bounds x="300" y="197" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
