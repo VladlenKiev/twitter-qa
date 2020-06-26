@@ -26,7 +26,7 @@ public class PublishTweetDelegate implements JavaDelegate {
         LOGGER.info("content in delegate = {}", content);
 //        String content = "I have done it 3! Mankovskyi!";
 
-        Long tweetId = createTweetService.pushTweet(content + LocalDateTime.now().toString());
+        Long tweetId = createTweetService.pushTweet(content);
         delegateExecution.setVariable("tweetId",tweetId);
     }
 }
