@@ -3,6 +3,7 @@ package com.camunda.training;
 import com.camunda.training.delegate.PublishTweetDelegate;
 import com.camunda.training.service.CreateTweetService;
 import org.assertj.core.api.Assertions;
+import org.camunda.bpm.dmn.engine.DmnDecisionTableResult;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 import static org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
+import static org.assertj.core.api.Assertions.entry;
 
 public class ProcessJUnitTest {
 
@@ -66,59 +68,27 @@ public class ProcessJUnitTest {
     }
 
     @Test
-    @Deployment(resources = "twitter-project-mankovskyi.bpmn")
+    @Deployment(resources = {"tweetApproval.dmn", "twitter-project-mankovskyi.bpmn"})
     public void testHappyPath_withTwitterIntegration() {
-        // Create a HashMap to put in variables for the process instance
-   /* HashMap<String, Object> variables = new HashMap<>();
-    variables.put("approved",true);*/
         // Start process with Java API and variables
         //ProcessApproveTweet
         HashMap<String, Object> variables = new HashMap<>();
-        variables.put("content", "Exercise 4 test - MANKOVSKYI");
-        variables.put("approved", true);
+        variables.put("email", "jakob.freund@camunda.com");
+        variables.put("content", "this should be published");
+//        variables.put("approved", true);
         ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
-        assertThat(processInstance).isWaitingAt("ReviewTweetTask");
-
-        List<Task> taskList = taskService()
-                .createTaskQuery()
-                .taskCandidateGroup("management")
-                .processInstanceId(processInstance.getId())
-                .list();
-
-        Task managementTask = taskQuery().taskCandidateGroup("management").singleResult();
-
-        System.out.println(taskList);
-        assertThat(managementTask).isNotNull();
-
-
-
-//    complete(task(), withVariables("approved", true));
-        Task task = taskList.get(0);
-        Map<String, Object> approvedMap = new HashMap<String, Object>();
-        approvedMap.put("approved", true);
-        taskService().complete(task.getId(), approvedMap);
-
-        List<Job> jobList = jobQuery()
-                .processInstanceId(processInstance.getId())
-                .list();
-
-        Job job = jobList.get(0);
-        Assertions.assertThat(jobList).hasSize(1);
-        execute(job);
+        assertThat(processInstance).hasPassed("ReviewTweetTask");
 
         assertThat(processInstance).hasPassed("IsApproveGateway");
         assertThat(processInstance).hasPassed("PublishTweetTask");
         assertThat(processInstance).hasNotPassed("DeclineTweetTask");
 
-        assertThat(processInstance).variables().containsEntry("tweetId", 0L);
-
         // Make assertions on the process instance
         assertThat(processInstance).isEnded();
-
     }
 
     @Test
-    @Deployment(resources = "twitter-project-mankovskyi.bpmn")
+    @Deployment(resources = {"tweetApproval.dmn", "twitter-project-mankovskyi.bpmn"})
     public void testTweetRejected_withTwitterIntegration() {
 
         HashMap<String, Object> variables = new HashMap<>();
@@ -150,7 +120,7 @@ public class ProcessJUnitTest {
     }
 
     @Test
-    @Deployment(resources = "twitter-project-mankovskyi.bpmn")
+    @Deployment(resources = {"tweetApproval.dmn", "twitter-project-mankovskyi.bpmn"})
     public void happyPath_withMessaging() {
 
         HashMap<String, Object> variables = new HashMap<>();
@@ -186,23 +156,12 @@ public class ProcessJUnitTest {
     }
 
     @Test
-    @Deployment(resources = "twitter-project-mankovskyi.bpmn")
-    public void testTweetWithdrawn_withMessaging() {
+    @Deployment(resources = "tweetApproval.dmn")
+    public void testTweetFromJakob() {
+        Map<String, Object> variables = withVariables("email", "jakob.freund@camunda.com", "content", "this should be published");
+        DmnDecisionTableResult decisionResult = decisionService().evaluateDecisionTableByKey("tweetApproval", variables);
 
-        HashMap<String, Object> variables = new HashMap<>();
-        variables.put("content", "Test tweetWithdrawn message - MANKOVSKYI");
-        variables.put("approved", true);
-
-        ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
-        assertThat(processInstance).isStarted().isWaitingAt("ReviewTweetTask");
-
-        runtimeService()
-                .createMessageCorrelation("tweetWithdrawn")
-                .processInstanceVariableEquals("content", "Test tweetWithdrawn message - MANKOVSKYI")
-                .correlateWithResult();
-
-        // Make assertions on the process instance
-        assertThat(processInstance).isEnded();
+        Assertions.assertThat(decisionResult.getFirstResult()).contains(entry("approved", true));
     }
 
 }
