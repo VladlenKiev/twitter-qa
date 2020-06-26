@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" id="Definitions_1ricitn" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.0.0">
+  <decision id="tweetApproval" name="Tweet Approval">
+    <decisionTable id="DecisionTable_19mftwk" hitPolicy="FIRST">
+      <input id="InputClause_1rlmhgs" label="email">
+        <inputExpression id="LiteralExpression_1mcnc01" typeRef="string">
+          <text>email</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_13oe42h" label="content ">
+        <inputExpression id="LiteralExpression_1yqp7uq" typeRef="string">
+          <text>content </text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="approved" name="approved" typeRef="boolean" />
+      <rule id="DecisionRule_0pyaozx">
+        <inputEntry id="UnaryTests_0157hfq">
+          <text>"jakob.freund@camunda.com"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1uf2msc">
+          <text>"this should be published"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0d8ygqi">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_06if7ri">
+        <description></description>
+        <inputEntry id="UnaryTests_1x79p9x">
+          <text>"cannot.tweet@camunda.org"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19daim9">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0sl3i4j">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1tbfz5h">
+        <inputEntry id="UnaryTests_18bxkdr">
+          <text>"test"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1fmd6lx">
+          <text>content.contains("camunda rocks")</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0pspjf6">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0gej8cs">
+        <inputEntry id="UnaryTests_15teduk">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ibn6ff">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ntyoay">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1hd3m59">
+        <inputEntry id="UnaryTests_0vf6ziz">
+          <text>"v.b.mankivskiy@gmail.com"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_09u1jb5">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1qpx63p">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0tpj7re">
+        <inputEntry id="UnaryTests_1owkxv1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pd18y7">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pmocd6">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
